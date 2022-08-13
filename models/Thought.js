@@ -24,32 +24,22 @@ const ThoughtSchema = new Schema({
     reactions: [
         { 
     type: Schema.Types.ObjectId,
-    ref: 'REACTION'
+    ref: 'Reactions'
         }
-    ],
-    reactionId: {
-        default: ObjectId
+    ]
+},
+{ 
+    toJSON: {
+      virtuals: true,
     },
-    reactionBody: {
-        type: String,
-        required: true,
-        max: [280]
-    },
-    username: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-        // user a getter method to formate the timestamp
-        // on a query
-    }
-    
-});
+    id: false
+  });
 
 // CREATE A VIRTUAL CALLED "reactionCount" THAT RETRIEVES
 // THE LENGTH OF THE THOUGHT'S REACTIONS ARRAY FIELD ON QUERY.
+ThoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+  });
 
 const Thought = model('Thought', ThoughtSchema);
 
