@@ -1,9 +1,9 @@
-const { Thought, User, Reactions } = require('../models');
+const { Thought, User } = require('../models');
 
 const thoughtController = {
 
   // get all Thoughts
-  getAllThought(req, res) {
+  getAllThoughts(req, res) {
     Thought.find({})
       .then(dbThoughtData => res.json(dbThoughtData))
       .catch(err => {
@@ -25,21 +25,23 @@ const thoughtController = {
   // createThought
   // PUSHED THE CREATED THOUGHT'S _id TO ASSOCIATED USER'S 
   // thoughts ARRAY FIELD 
-  createThought({ params, body }, res) {
+  addThought({ params, body }, res) {
+    console.log("Create Thought Query Hit!")
     console.log(body);
     Thought.create(body)
     .then(({ _id }) => {
       return User.findOneAndUpdate(
         { _id: params.userId },
-        { $push: {thought: _id } },
+        { $push: {thoughts: _id } },
         { new: true }
       );
     })
+      .then (console.log( [thoughts] ))
       .then(dbUserData => {
-        if (!dbUserData) {
-          res.status(404).json({ message: 'No user by that id!'});
-          return;
-        }
+        // if (!dbUserData) {
+        //   res.status(404).json({ message: 'No user by that id!'});
+        //   return;
+        // }
       res.json(dbUserData);
     })
       .catch(err => res.json(err));

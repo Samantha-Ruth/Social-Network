@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const ReactionsSchema = new Schema({
-    reactionId: {
-        default: ObjectId
-    },
+    // reactionId: {
+    //     default: ObjectId
+    // },
     reactionBody: {
         type: String,
         required: true,
