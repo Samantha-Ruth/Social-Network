@@ -82,7 +82,7 @@ const thoughtController = {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbUserData);
+        res.json(true);
       })
       .catch(err => res.json(err));
   },
@@ -130,7 +130,7 @@ createReaction({ params, body }, res) {
         res.status(404).json({ message: 'No thought found with this id!' });
         return;
       }
-      res.json(dbThoughtData);
+      res.json(true);
     })
     .catch(err => res.json(err));
 }
