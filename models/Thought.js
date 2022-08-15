@@ -1,5 +1,33 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
+
+const ReactionsSchema = new Schema({
+  reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId()
+  },
+  reactionBody: {
+      type: String,
+      required: true,
+      max: [280]
+  },
+  username: {
+      type: String,
+      required: true
+  },
+  createdAt: {
+      type: Date,
+      default: Date.now,
+      // user a getter method to format the timestamp
+      // on a query
+      get: (createdAtVal) => dateFormat(createdAtVal)
+  }
+},
+{ 
+  toJSON: {
+  getters: true
+  }
+});
 
 const ThoughtSchema = new Schema({
   thoughtText: {
@@ -19,15 +47,8 @@ const ThoughtSchema = new Schema({
     type: String,
     required: true
   },
-  // *** MAKE SURE THESE WORK!! ****
-  // THIS NEEDS TO BE AN ARRAY OF NESTED DOCUMENTS CREATED
-  // WITH THE REACTIONSCHEMA.
-    reactions: [
-        { 
-    type: Schema.Types.ObjectId,
-    ref: 'Reactions'
-        }
-    ]
+  // ARRAY OF NESTED DOCUMENTS CREATED WITH THE REACTIONSCHEMA.
+    reactions: [ReactionsSchema]
 },
 { 
     toJSON: {

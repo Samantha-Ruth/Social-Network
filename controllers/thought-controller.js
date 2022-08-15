@@ -87,21 +87,15 @@ const thoughtController = {
       .catch(err => res.json(err));
   },
 
-
-// WHERE DO I ADD THE ROUTE INFORMATION BELOW? DO I NEED ANOTHER 
-// CONTROLLER OR IS THIS HANDLED IN THE ROUTES? ROUTES.
 //   /api/thoughts/:thoughtId/reactions
-// POST to create a reaction stored in a single thought's reactions array field
+// PUT to create a reaction stored in a single thought's reactions array field
 createReaction({ params, body }, res) {
   console.log(body);
-  Reactions.create(body)
-  .then(({ _id }) => {
-    return Thought.findOneAndUpdate(
-      { _id: params.thoughtId},
-      { $push: {thoughts: _id} },
+  Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $push: { reactions: body } },
       { new: true }
-    );
-  })
+    )
   .then(dbThoughtData => {
     if (!dbThoughtData) {
         res.status(404).json({ message: 'No thought found with this id!'});
@@ -114,24 +108,12 @@ createReaction({ params, body }, res) {
 
 // DELETE to pull and remove a reaction by the reaction's reactionId value
   deleteReaction({ params }, res) {
-  Reactions.findOneAndDelete({ _id: params.reactionId })
-    .then(deletedReaction => {
-      if (!deletedReaction) {
-        return res.status(404).json({ message: 'No reaction with ths id!' });
-      }
-      return Thought.findOneAndUpdate(
-        { _id: params.thoughtId },
-        { $pull: { reaction: params.reactionId } },
-        { new: true}
-    );
-    })
-    .then(dbThoughtData => {
-      if (!dbThoughtData) {
-        res.status(404).json({ message: 'No thought found with this id!' });
-        return;
-      }
-      res.json(true);
-    })
+  Thought.findOneAndUpdate(
+    { _id: params.thoughtId },
+    { $pull: { reactions: { reactionID: params.reactionId } } },
+    { new: true }
+  )
+    .then((dbUserData) => res.json(dbUserData))
     .catch(err => res.json(err));
 }
 };
