@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { Thought, User } = require('../models');
 
 const thoughtController = {
@@ -119,3 +120,5 @@ createReaction({ params, body }, res) {
 };
 
 module.exports = thoughtController;
+=======
+>>>>>>> feature/GETUSER
