@@ -9,7 +9,7 @@ const userController = {
         res.status(400).json(err);
       });
   },
-
+  
   // Get individual user
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
