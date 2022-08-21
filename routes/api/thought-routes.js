@@ -19,7 +19,8 @@ router
 // /api/thoughts/<thoughtId>
 router
   .route('/:thoughtId')
-  .get(getThoughtById);
+  .get(getThoughtById)
+  .put(updateThought);
 
 // /api/thoughts/<userId>
 router
@@ -30,12 +31,16 @@ router
 // /api/thoughts/<userId>/<thoughtID>
 router
   .route('/:userId/:thoughtId')
-  .put(updateThought)
-  .put(createReaction)
   .delete(deleteThought);
 
-// /api/thoughts/<userID>/<thoughtId>/<reactionId>
+// /api/thoughts/<userID>/<thoughtId>/<reactionId> 
+router 
+.route('/:thoughtId/reactions')
+.put(createReaction);
+
+// /api/thoughts/<userId>/<thoughtId>/<reactionId>
 router
+  // .route('/:userId/:thoughtId/:reactionId')
   .route('/:userId/:thoughtId/:reactionId')
   .delete(deleteReaction);
 
