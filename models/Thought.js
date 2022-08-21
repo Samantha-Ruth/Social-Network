@@ -2,6 +2,7 @@ const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const ReactionsSchema = new Schema({
+  // set custom id to avoid confusion with parent comment's _id field
   reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId()
@@ -9,7 +10,7 @@ const ReactionsSchema = new Schema({
   reactionBody: {
       type: String,
       required: true,
-      max: [280]
+      maxLength: 280
   },
   username: {
       type: String,
@@ -18,8 +19,7 @@ const ReactionsSchema = new Schema({
   createdAt: {
       type: Date,
       default: Date.now,
-      // user a getter method to format the timestamp
-      // on a query
+      // getter method to format the timestamp
       get: (createdAtVal) => dateFormat(createdAtVal)
   }
 },
@@ -33,15 +33,14 @@ const ThoughtSchema = new Schema({
   thoughtText: {
     type: String,
     required: true,
-    // CHECK IF THESE WORK!
-    min: [1],
-    max: [280]
+    minLength: 1,
+    maxLength: 280
   },
   createdAt: {
     type: Date,
     default: Date.now,
+    // using getter method to formate the timestamp
     get: (createdAtVal) => dateFormat(createdAtVal)
-    // **** Use getter method to formate the timestamp on a query
   },
   username: {
     type: String,
