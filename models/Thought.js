@@ -9,12 +9,12 @@ const ReactionsSchema = new Schema({
   },
   reactionBody: {
       type: String,
-      required: true,
+      required: 'Reaction text is required.',
       maxLength: 280
   },
   username: {
       type: String,
-      required: true
+      required: 'Username is required.'
   },
   createdAt: {
       type: Date,
@@ -44,7 +44,7 @@ const ThoughtSchema = new Schema({
   },
   username: {
     type: String,
-    required: true
+    required: 'Username is required.'
   },
   // ARRAY OF NESTED DOCUMENTS CREATED WITH THE REACTIONSCHEMA.
     reactions: [ReactionsSchema]
@@ -57,8 +57,7 @@ const ThoughtSchema = new Schema({
     id: false
   });
 
-// CREATE A VIRTUAL CALLED "reactionCount" THAT RETRIEVES
-// THE LENGTH OF THE THOUGHT'S REACTIONS ARRAY FIELD ON QUERY.
+// Virtual that retrieves length of thought reaction's array field.
 ThoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
   });
