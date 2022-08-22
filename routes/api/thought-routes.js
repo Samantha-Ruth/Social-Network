@@ -32,7 +32,7 @@ router
   .route('/:userId/:thoughtId')
   .delete(deleteThought);
 
-// /api/thoughts/<userID>/<thoughtId>/<reactionId> 
+// /api/thoughts/<userID>/<thoughtId>/<reactionId> <us
 router 
 .route('/:thoughtId/reactions')
 .put(createReaction);
