@@ -16,3 +16,15 @@ A backend databse for an up and coming social network!
 
 
 
+## Links
+
+
+Link to video of project: 
+
+
+The url of the Git repository is here: https://github.com/Samantha-Ruth/E-commerce-Back-End
+
+
+## Questions
+
+If you have any questions about the repo, open an issue or you can find more of my work at (https://gitHub.com/Samantha-Ruth).
