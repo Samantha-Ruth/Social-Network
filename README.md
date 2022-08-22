@@ -38,7 +38,7 @@ Screen Shot of Reaction
 
 
 ## Usage
-A backend databse for an up and coming social network! 
+A backend database for an up and coming social network! 
 
 
 ## Links!
