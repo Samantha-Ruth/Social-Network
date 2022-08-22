@@ -1,7 +1,8 @@
 const { Thought, User } = require("../models");
 
 const thoughtController = {
-  // get all thoughts
+  
+  // Get all Thoughts
   getAllThoughts(req, res) {
     Thought.find({})
       .then((dbThoughtData) => res.json(dbThoughtData))
@@ -11,7 +12,7 @@ const thoughtController = {
       });
   },
 
-  // get one thought by id
+  // Get a Thought by id
   getThoughtById({ params }, res) {
     console.log(params);
     Thought.findOne({ _id: params.thoughtId })
@@ -28,9 +29,7 @@ const thoughtController = {
       });
   },
 
-  // createThought
-  // PUSHED THE CREATED THOUGHT'S _id TO ASSOCIATED USER'S
-  // thoughts ARRAY FIELD
+  // Create a Thought
   addThought({ params, body }, res) {
     console.log("Create Thought Query Hit!");
     console.log(body);
@@ -52,7 +51,7 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // update thought by id
+  // Update Thought by id
   updateThought({ params, body }, res) {
     console.log(params);
     console.log(body);
@@ -67,7 +66,7 @@ const thoughtController = {
       .catch(err => res.status(400).json(err));
   },
 
-  // delete thought
+  // Delete a Thought
   deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.thoughtId })
       .then((deletedThought) => {
@@ -90,8 +89,7 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  //   /api/thoughts/:thoughtId/reactions
-  // PUT to create a reaction stored in a single thought's reactions array field
+// Create a Reaction
   createReaction({ params, body }, res) {
     console.log(body);
     Thought.findOneAndUpdate(
@@ -109,7 +107,7 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // DELETE to pull and remove a reaction by the reaction's reactionId value
+  // Delete a Reaction
   deleteReaction({ params }, res) {
     console.log(params);
     Thought.findOneAndUpdate(
