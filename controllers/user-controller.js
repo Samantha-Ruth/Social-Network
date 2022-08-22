@@ -1,6 +1,6 @@
 const { User } = require("../models");
 const userController = {
-  // get all users
+  // Get all Users
   getAllUsers(req, res) {
     User.find({})
     .populate({
@@ -16,7 +16,7 @@ const userController = {
       });
   },
 
-  // Get individual user by id
+  // Get a User by id
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
     .populate ({
@@ -37,14 +37,14 @@ const userController = {
       });
   },
 
-  // create User
+  // Create a User
   createUser({ body }, res) {
     User.create(body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.json(err));
   },
 
-  // update user by id
+  // Update User by id
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, {
       new: true,
@@ -60,7 +60,7 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  // delete User
+  // Delete User
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then((dbUserData) => {
@@ -73,17 +73,13 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
-  // addFriend
-  addFriend({ params, body }, res) {
-    console.log(body);
-    User.create(body)
-      .then(({ _id }) => {
-        return User.findOneAndUpdate(
-          { _id: params.userId },
-          { $push: { friends: _id } },
-          { new: true }
-        );
-      })
+  // Add a Friend
+  addFriend({ params }, res) {
+    User.findOneAndUpdate(
+          { _id: params.id },
+          { $push: { friends: params.friendId } },
+          { new: true, runValidators:true }
+        )
       .then((dbUserData) => {
         if (!dbUserData) {
           res.status(404).json({ message: "No user with this id!" });
@@ -94,22 +90,20 @@ const userController = {
       .catch((err) => res.json(err));
   },
 
-  // delete Friend
+  // Delete a Friend because they did that thing
+  // and seriously crossed the line and now there's just no going back
+  // and honestly, you're better without them!
+  // But they also make really good scones...  so.... you could always friend them again, right? 
   removeFriend({ params }, res) {
-    User.findOneAndDelete({ _id: params.userId });
-    then((removedFriend) => {
-      if (!removedFriend) {
-        return res.status(404).json({ message: "No friend with this id!" });
-      }
-      return User.findOneAndUpdate(
-        { _id: params.userId },
-        { $pull: { friends: params.userId } },
-        { new: true }
-      );
-    })
+    console.log(params);
+    User.findOneAndUpdate(
+      { _id: params.id },
+      { $pull: { friends: params.friendId } },
+      { new: true }
+      )
       .then((dbUserData) => {
         if (!dbUserData) {
-          res.status(404).json({ message: "No user found with this id!" });
+          res.status(404).json({ message: "No friend found with this id!" });
           return;
         }
         res.json(true);
