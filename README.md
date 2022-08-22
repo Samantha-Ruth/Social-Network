@@ -22,7 +22,7 @@ A backend databse for an up and coming social network!
 Link to video of project: 
 
 
-The url of the Git repository is here: https://github.com/Samantha-Ruth/E-commerce-Back-End
+The url of the Git repository is here: https://github.com/Samantha-Ruth/Social-Network
 
 
 ## Questions
